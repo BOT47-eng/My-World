@@ -1,0 +1,4 @@
+Some of the few mistakes i made along the way in memory management.
+
+1. In Classes Never ever pass the object as copy especially if it has some in pointer var in it. You will get the double free error.
+   (Only if you haven't implemented the copy constructor)
