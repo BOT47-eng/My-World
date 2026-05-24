@@ -18,7 +18,7 @@ String::String(char *arr) : Array(nullptr) , size(0)
     } 
     this->Array[size] = '\0' ;  
 }
-String::String(const int number) : Array(nullptr) , size(0)
+String::String(const int number ,const  int totalNumberOfZeros) : Array(nullptr) , size(0)
 {
     // It has three different cases 
     // 1. Positive Number
@@ -26,7 +26,7 @@ String::String(const int number) : Array(nullptr) , size(0)
     // 3. Zero or Multiple Zeros
 
     // Getting the size
-    if(number >  0)
+    if(number >  0) // Pos Case
     {
         int copy = number ; 
         while(copy > 0)
@@ -46,9 +46,41 @@ String::String(const int number) : Array(nullptr) , size(0)
         }
         Array[size] = '\0' ;
     }
-    else if(number < 0)
+    else if(number < 0) // Neg Case
     {
-
+        int copy = abs(number) ; 
+        while(copy > 0)
+        {
+            copy /= 10 ;
+            size++ ;
+        }
+        copy = number;
+        Array  = new char[size +  2] ; //  +1 extra space for neg sign 
+        int st = size - 1 ;  
+        while(copy > 0)
+        {
+            Array[st] = ((copy  % 10) + '0') ; 
+            copy /= 10 ; 
+            st-- ;
+            st = (st < 0) ?  0 : st ; 
+        }
+        Array[0] = '-' ; 
+        Array[size] = '\0' ;
+    }
+    else if(number == 0) // Zero Case  
+    {
+        size = (totalNumberOfZeros > 0) ? totalNumberOfZeros : 1 ; 
+        Array = new char[size + 1] ; 
+        int c = size  ;
+        int st = size - 1 ;
+        while(c  > 0)
+        {
+            Array[st] = '0' ;
+            c-- ;
+            st-- ;
+            st = (st < 0) ?  0 : st ; 
+        }
+        Array[size] = '\0' ;
     } 
 }
 String::String(const String& s)
@@ -84,6 +116,93 @@ String::~String()
 
 /////////////////////////////////
 /// Operator Overloaing
+
+String String::operator+= (String &s)
+{
+    if(Array == nullptr || s.Array == nullptr)
+    {
+        return *this ;  
+    }
+    char arr[size] ;
+    const int copySize =  size ;  
+    for(int st =  0 ; st <=  size - 1 ; st++)
+    {
+        arr[st] = this->Array[st] ; 
+    }
+    delete [] Array  ; 
+    Array = nullptr ; 
+    size = size + s.size  ;
+    Array = new char[size + 1] ;
+    int idx  = 0 ; 
+    for(int st = 0 ; st  <= copySize - 1 ; st++)
+    {
+        Array[idx++] = arr[st] ;
+    } 
+    for(int st = 0 ; st  <= s.size - 1 ; st++)
+    {
+        Array[idx++] = s.Array[st] ;
+    }
+    Array[size] = '\0'; 
+    return *this ; 
+}
+
+String String::operator=(String &s)
+{
+    if(size != s.size)
+    {
+        delete [] Array  ;
+        Array = nullptr ;
+        size = s.size ; 
+        Array = new char[size  + 1] ;
+        Array[size] = '\0' ; 
+    }
+    for(int st =  0 ; st <= size -  1 ; st++)
+    {
+        Array[st] = s.Array[st] ; 
+    }
+    return *this ; 
+}
+String String::operator=(char *arr)
+{
+    if(size != sizeOf(arr))
+    {
+        delete [] Array  ;
+        Array = nullptr ;
+        size = sizeOf(arr) ; 
+        Array = new char[size  + 1] ;
+        Array[size] = '\0' ; 
+    }
+    for(int st =  0 ; st <= size -  1 ; st++)
+    {
+        Array[st] = arr[st] ; 
+    }
+    return *this ; 
+}
+String String::operator=(const int& number) 
+{
+    String temp(number) ; 
+    *this = temp.Array ;  
+    return *this ;
+}
+String String::operator=(std::string &s)
+{
+    if(size != s.length())
+    {
+        delete [] Array  ;
+        Array = nullptr ;
+        size = s.length(); 
+        Array = new char[size  + 1] ;
+        Array[size] = '\0' ; 
+    }
+    for(int st =  0 ; st <= size -  1 ; st++)
+    {
+        Array[st] = s[st] ; 
+    }
+    return *this ; 
+}
+
+
+
 std::ostream& operator <<(std::ostream &os  , const String& s)
 {
     os << s.Array ; 
