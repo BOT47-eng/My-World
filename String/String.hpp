@@ -11,13 +11,32 @@ public : // No Concept of encapsulation exists in my dictionary
 char *Array ; 
 int size ;
 
+/// It can have two types only
+/**
+ * String 
+ * Mixed
+ */
+char type[7] ;
+int *Integers ; 
+double *Doubles;
+
+
 
 ////////////////////////
 ////// Constructors  
+
+
+// TODO 
+String(const float) ; 
+String(const double) ; 
+String(const bool) ; 
+
+
+/// Done 
 String();
-String(char  * arr);
-String(const int number , const int totalNumberOfZeros = -1); // Number you wanna convert to string and if you wanna have multiple zeros , pass the 0 as number and numberOfZeros you wanna add.
-String(const String &s) ;
+String(char  *);
+String(const int , const int = -1); // Number you wanna convert to string and if you wanna have multiple zeros , pass the 0 as number and numberOfZeros you wanna add.
+String(const String &) ;
 ////////////////////////
 ////// Destructors 
 ~String() ;
@@ -27,16 +46,52 @@ String(const String &s) ;
 
 
 /// TODO
+String operator=(bool) ; 
+String operator=(float) ; 
+String operator=(double) ; 
+
 
 ///Done 
-String operator=(String &s) ; 
-String operator=(char *arr) ; 
-String operator=(const int& number) ; 
-String operator=(std::string &s) ; 
+String operator=(String &) ; 
+String operator=(char *) ; 
+String operator=(const int&) ; 
+String operator=(std::string &) ; 
 
 
-String operator+= (String &s);
-friend std::ostream& operator <<(std::ostream &os  , const String& s) ; 
+String operator+= (String &);
+
+
+friend std::ostream& operator <<(std::ostream &  , const String&) ; 
+
+
+
+
+
+///////////////////////////////////////////
+//// Templates z, Since they are inside the class for some function , i can't define them outside
+template <typename T = char> 
+T getValue(const int index)
+{
+    if(index < 0  || index >= size)
+    {
+        return ' ' ;
+    }
+
+    if(typeid(T) == typeid(int) || typeid(T) == typeid(double) || typeid(T) == typeid(float))
+    {
+        return static_cast<T>(this->Array[index] - '0'); 
+    }
+    else if(typeid(T) == typeid(bool))
+    {
+        if(this->Array[index] == '0') return false ; 
+        else return true ; 
+    }
+    else
+    {
+        return this->Array[index] ; 
+    }
+    return ' ' ;
+}
 
 
 
@@ -51,7 +106,7 @@ friend std::ostream& operator <<(std::ostream &os  , const String& s) ;
 
 
 /// Done 
-int sizeOf(char * arr) ;
+int sizeOf(char *) ;
 
 }; 
 
