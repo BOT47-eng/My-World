@@ -145,6 +145,36 @@ String String::operator+= (String &s)
     Array[size] = '\0'; 
     return *this ; 
 }
+String String::operator+=(char * arr)
+{
+    if(arr == nullptr) return *this ;    
+    char copy[size] ; 
+    int copySize = size ; 
+    for(int st =  0 ; st <= size  - 1  ; st++)
+    {
+        copy[st] = this->Array[st] ; 
+    }
+    if(Array != nullptr)
+    {
+        delete [] Array  ;
+        Array = nullptr ; 
+    }
+    size += sizeOf(arr) ; 
+    Array = new char[size + 1] ;
+
+    int idx  = 0 ; 
+    for(int st = 0 ; st  <= copySize - 1 ; st++)
+    {
+        Array[idx++] = copy[st] ;
+    } 
+    for(int st = 0 ; st  <=  sizeOf(arr) - 1 ; st++)
+    {
+        Array[idx++] = arr[st] ;
+    }
+    Array[size] = '\0'; 
+    return *this ; 
+}
+
 
 String String::operator=(String &s)
 {
@@ -201,6 +231,74 @@ String String::operator=(std::string &s)
     return *this ; 
 }
 
+
+
+bool String::operator== (const String & s) const 
+{
+    if(this->size != s.size)
+    {
+        return false ; 
+    }
+    for(int st  = 0 ; st <= size - 1 ; st++)
+    {
+        if(Array[st] != s.Array[st]) return false  ; 
+    }
+    return true ;
+}
+bool String::operator== (char * arr)
+{
+    const int s  =  sizeOf(arr) ;
+    if(this->size != s)
+    {
+        return false; 
+    }
+    for(int st = 0 ; st <= s -  1 ; st++)
+    {
+        if(Array[st] != arr[st]) return false  ; 
+    }
+    return true ; 
+}
+bool String::operator== (std::string & S) const
+{
+    const int s  =  S.length()  ;
+    if(this->size != s)
+    {
+        return false; 
+    }
+    for(int st = 0 ; st <= s -  1 ; st++)
+    {
+        if(Array[st] != S[st]) return false  ; 
+    }
+    return true ;
+}
+
+
+String String::operator*(String & s) 
+{
+    *(this) += s  ;
+    return *this ; 
+} 
+String String::operator*(char * arr)
+{
+    *(this) += arr ;
+    return *this ;  
+}
+// Multiplying by 0 will make it empty.
+String String::operator*(int value)
+{
+    String temp(*this) ; 
+    if(value <= 0)
+    {
+        temp = "" ; 
+        return  temp ; 
+    }
+    int times = value - 1 ;
+    while(times--)
+    {
+        temp += *this ; ;
+    }
+    return temp ; 
+} 
 
 
 std::ostream& operator <<(std::ostream &os  , const String& s)

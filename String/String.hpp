@@ -7,7 +7,6 @@ class String
 {
 public : // No Concept of encapsulation exists in my dictionary 
 
-
 char *Array ; 
 int size ;
 
@@ -51,6 +50,16 @@ String operator=(float) ;
 String operator=(double) ; 
 
 
+String operator+=(int); 
+String operator+=(float) ; 
+String operator+=(double) ;
+String operator+=(bool);
+
+bool operator== (char *) ; 
+bool operator== (std::string &) const ; 
+
+
+
 ///Done 
 String operator=(String &) ; 
 String operator=(char *) ; 
@@ -59,16 +68,25 @@ String operator=(std::string &) ;
 
 
 String operator+= (String &);
+String operator+=(char *) ;
+
+
+bool operator== (const String &) const ; 
+
+
+
+String operator*(String &) ; 
+String operator*(char *) ; 
+String operator*(int) ; 
+
 
 
 friend std::ostream& operator <<(std::ostream &  , const String&) ; 
 
 
 
-
-
 ///////////////////////////////////////////
-//// Templates z, Since they are inside the class for some function , i can't define them outside
+//// Templates , Since they are inside the class for some function , i can't define them outside
 template <typename T = char> 
 T getValue(const int index)
 {
@@ -108,8 +126,7 @@ T getValue(const int index)
 /// Done 
 int sizeOf(char *) ;
 
-}; 
-
+};
 
 
 
