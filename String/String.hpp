@@ -10,14 +10,6 @@ public : // No Concept of encapsulation exists in my dictionary
 char *Array ; 
 int size ;
 
-/// It can have two types only
-/**
- * String 
- * Mixed
- */
-char type[7] ;
-int *Integers ; 
-double *Doubles;
 
 
 
@@ -28,7 +20,6 @@ double *Doubles;
 // TODO 
 String(const float) ; 
 String(const double) ; 
-String(const bool) ; 
 
 
 /// Done 
@@ -36,6 +27,8 @@ String();
 String(char  *);
 String(const int , const int = -1); // Number you wanna convert to string and if you wanna have multiple zeros , pass the 0 as number and numberOfZeros you wanna add.
 String(const String &) ;
+String(const bool) ; 
+
 ////////////////////////
 ////// Destructors 
 ~String() ;
@@ -45,33 +38,33 @@ String(const String &) ;
 
 
 /// TODO
-String operator=(bool) ; 
 String operator=(float) ; 
 String operator=(double) ; 
 
-
-String operator+=(int); 
 String operator+=(float) ; 
 String operator+=(double) ;
-String operator+=(bool);
 
-bool operator== (char *) ; 
-bool operator== (std::string &) const ; 
 
 
 
 ///Done 
 String operator=(String &) ; 
+String operator=(String) ; 
 String operator=(char *) ; 
 String operator=(const int&) ; 
 String operator=(std::string &) ; 
+String operator=(bool) ; 
 
 
 String operator+= (String &);
 String operator+=(char *) ;
+String operator+=(bool);
+String operator+=(int); 
 
 
 bool operator== (const String &) const ; 
+bool operator== (std::string &) const ; 
+bool operator== (char *) ; 
 
 
 
@@ -125,7 +118,6 @@ T getValue(const int index)
 
 /// Done 
 int sizeOf(char *) ;
-
 };
 
 

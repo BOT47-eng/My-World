@@ -4,7 +4,6 @@
 
 /////////////////////////////////////////////
 ////// Constructors Definition
-
 String::String() : Array(nullptr) , size(0)
 {
 }
@@ -93,6 +92,17 @@ String::String(const String& s)
     } 
     this->Array[size] = '\0' ;  
 }
+String::String(const bool b)
+{
+    if(b)
+    {
+        *(this) += "True" ;
+    }
+    else 
+    {
+        *(this) += "False" ;
+    }
+}
 ////// Constructor Definition Section Ends
 ////////////////////////////////////////////
 
@@ -174,6 +184,24 @@ String String::operator+=(char * arr)
     Array[size] = '\0'; 
     return *this ; 
 }
+String String::operator+=(int v)
+{
+    String temp(v) ; 
+    *(this) += temp ;
+    return *this ; 
+}
+String String::operator+=(bool b)
+{
+    if(b)
+    {
+        *(this) += "True" ;
+    }
+    else 
+    {
+        *(this) += "False" ;
+    }
+    return *this ;
+}
 
 
 String String::operator=(String &s)
@@ -191,6 +219,22 @@ String String::operator=(String &s)
         Array[st] = s.Array[st] ; 
     }
     return *this ; 
+}
+String String::operator=(String s)
+{
+    if(size != s.size)
+    {
+        delete [] Array  ;
+        Array = nullptr ;
+        size = s.size ; 
+        Array = new char[size  + 1] ;
+        Array[size] = '\0' ; 
+    }
+    for(int st =  0 ; st <= size -  1 ; st++)
+    {
+        Array[st] = s.Array[st] ; 
+    }
+    return *this ;
 }
 String String::operator=(char *arr)
 {
@@ -230,6 +274,18 @@ String String::operator=(std::string &s)
     }
     return *this ; 
 }
+String String::operator=(bool b)
+{
+    if(b)
+    {
+        *(this) = "True" ; 
+    }
+    else 
+    {
+        *(this) = "False" ; 
+    }
+    return *this ; 
+} 
 
 
 
